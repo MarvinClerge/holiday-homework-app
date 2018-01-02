@@ -1,0 +1,9 @@
+<%= form_for post do |f| %>
+  <%= f.label :title %><br>
+  <%= f.text_field :title, class: "form-control text-left" %><br>
+
+  <%= f.label :content %><br>
+  <%= f.text_area :content, class: "form-control text-left", rows: 15 %><br>
+
+  <%= f.submit "Save Changes", class: "btn-block #{current_user.get_color}" %>
+<% end %>

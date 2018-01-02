@@ -1,0 +1,91 @@
+<div class="container text-center">
+  <% if flash[:error] %>
+    <strong class="alert alert-danger"><%= flash[:error] %></strong>
+    <br><br>
+  <% end %>
+
+  <% if current_user == @post.user %>
+  <% post = @post %>
+    <div class="row">
+      <div class="col text-right">
+        <%= link_to 'Edit', edit_post_path(@post), data: {toggle: 'modal', target: '#edit-post-modal'} %>
+
+        <div class="modal fade" id="edit-post-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <div class="modal-body">
+                <%= render file: 'posts/edit', locals: {post: post} %>
+              </div>
+              <div class="modal-footer">
+                <a href="#" data-dismiss="modal">Close</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col text-left">
+        <%= link_to "Delete", post_path(@post), method: 'delete', data: {confirm: "Are you sure you want to delete\n#{@post.title}"} %>
+      </div>
+    </div>
+  <% end %>
+
+
+
+  <div class="row text-center">
+    <div class="col">
+      <h1><%= @post.title%></h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col text-right">
+      <%= @post.user.name %>
+    </div>
+    <div class="col text-left">
+      <%= @post.created_at.strftime("%b %d, %Y") %>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row text-left">
+    <div class="col-2"></div>
+    <div class="col-sm-8">
+      <%= simple_format @post.content %>
+      <%= button_to "Like Post", {controller: "likes", action: "create", post_id: @post.id}, class: "form-control" %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <br>
+
+  <div class="row text-left">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <%= render file: 'comments/new', locals: {post: @post}%>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <br>
+
+  <div class="row text-left">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <% @post.sorted_comments.each do |comm| %>
+      <%= comm.user.username %>
+      <em class="text-muted"><%= comm.created_at.strftime("%b %d, %Y") %></em>
+      <br>
+      <%= simple_format comm.content %>
+      <% end %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
+
+
+
+<br>

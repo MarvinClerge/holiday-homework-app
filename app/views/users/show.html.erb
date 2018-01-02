@@ -1,0 +1,66 @@
+<div class="row">
+
+  <!-- Start of User Information -->
+  <div class="col-sm-4 border-right bg-gradient-primary">
+    <div class="border mb-2 p-2">
+      <h5><%= @user.name %></h5>
+      <small><%= "@#{@user.username}" %></small><br>
+      <small><%= "#{@user.email}" %></small><br>
+      <%= @user.bio %><br>
+      <%= link_to "Edit Profile", edit_user_path(@user), class: "dropdown-item text-center #{current_user.get_color}" %>
+    </div>
+    <div class="border mb-2 p-2">
+      <h5>Followers</h5>
+    </div>
+    <div class="border mb-2 p-2">
+      <h5>Following</h5>
+    </div>
+  </div>
+  <!-- End of User Information -->
+
+  <!-- Start of Posts -->
+  <div class="col-sm-8">
+    <% @sorted_posts.each do |post| %>
+    <div class="border mb-4 p-1">
+      <div class="<%= current_user.get_color %> px-1">
+        <div class="row">
+          <div class="col">
+            <h5><%= link_to post.title, post_path(post), class: "#{current_user.get_color}" %></h5>
+          </div>
+          <div class="col text-right">
+            <small><%= post.likes_and_views %></small>
+          </div>
+        </div>
+      </div>
+      <%= post.summary %><br>
+
+      <!-- If this is logged user's page show them edit and delete -->
+      <% if current_user == @user %>
+      <!-- Edit Modal for a Post -->
+        <%= link_to "Edit", edit_post_path(post), data: {toggle: 'modal', target: '#post-edit-modal'} %>
+        <div class="modal fade" id="post-edit-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <%= render file: 'posts/edit', locals: {post: post} %>
+              </div>
+              <div class="modal-footer">
+                <a href="#" data-dismiss="modal">Close</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Link for a Post with confirmation -->
+        <%= link_to "Delete", post_path(post), method: 'delete', data: {confirm: "Are you sure you want to delete\n#{post.title}"} %>
+
+      <% end %>
+      <!-- End of user's edit and delete -->
+
+    </div>
+
+    <% end %>
+  </div>
+  <!-- End of Posts -->
+
+</div>

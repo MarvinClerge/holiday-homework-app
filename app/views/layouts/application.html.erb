@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HolidayHomeworkApp</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default border" role="navigation">
+      <% if !logged_in? %>
+        <div class="navbar-header">
+          <%= link_to "Login", login_path %>
+        </div>
+          <%= link_to "Sign Up", signup_path %>
+
+        <% else %>
+
+        <div class="navbar-header">
+          <!-- USER DROPDOWN -->
+          <div class="btn-group">
+            <%= button_to current_user.username, user_path(current_user), method: 'get', class: "btn" %>
+            <button type="button" class="btn dropdown-toggle dropdown-toggle-split <%= current_user.get_color %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+              <!-- EDIT USER'S PROFILE -->
+              <%= link_to "Account Settings", edit_user_path(current_user), class: 'dropdown-item' %>
+              <div class="dropdown-divider"></div>
+              <!-- LOG OUT USER'S PROFILE -->
+              <%= link_to "Log Out", logout_path, class: "dropdown-item" %>
+            </div>
+            <!-- END OF USER DROPDOWN -->
+          </div>
+          <%= link_to "Browse", categories_path, class: "btn" %>
+        </div>
+
+        <!-- USER NEW POST -->
+        <%= link_to "New Post", new_post_path, class: "btn #{current_user.get_color}" , data: {toggle: 'modal', target: '#new-post-modal'} %>
+        <div class="modal fade" id="new-post-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <%= render file: 'posts/new' %>
+              </div>
+              <div class="modal-footer">
+                <a href="#" data-dismiss="modal">Close</a>
+              </div>
+          </div>
+        </div>
+      <% end %>
+    </nav>
+
+    <br>
+
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
+  </body>
+</html>

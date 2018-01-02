@@ -1,0 +1,9 @@
+<%= form_tag posts_path do %>
+  <%= label_tag 'Title' %><br>
+  <%= text_field_tag :'post[title]', nil, class: "form-control" %><br>
+
+  <%= label_tag 'Content' %><br>
+  <%= text_area_tag 'post[content]', nil,  class: "form-control", rows: 15 %><br>
+
+  <%= submit_tag "Post", class: "btn-block #{current_user.get_color}"%>
+<% end %>

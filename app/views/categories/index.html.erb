@@ -1,0 +1,27 @@
+<h3 class="text-center">Categories</h3>
+<div class="container">
+
+
+
+  <% @categories.each do |cate| %>
+    <!-- ROW FOR CATEOGRY NAME -->
+    <div class="row">
+      <div class="col">
+        <%= cate.name %>
+      </div>
+    </div>
+
+    <!-- ROW FOR CATEGORY POSTS -->
+    <div class="row">
+      <% cate.top_3_posts.each do |x| %>
+      <div class="col-4 border" >
+        <strong class="title"><%= link_to x.title, post_path(x) %></strong>
+        <p class="divider"></p>
+        <%= x.summary %>
+      </div>
+      <% end %>
+    </div>
+
+    <br>
+  <% end %>
+</div>

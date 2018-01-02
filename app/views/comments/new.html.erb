@@ -1,0 +1,8 @@
+<strong class="text-left"><%= "#{@post.comments.count} comments " %></strong>
+
+<%= form_tag comments_path do %>
+  <%= text_area_tag "comment[content]", nil, rows: 5, class: "form-control" %>
+  <%= hidden_field_tag "comment[user_id]", current_user.id%>
+  <%= hidden_field_tag "comment[post_id]", @post.id%>
+  <%= submit_tag "Post Comment", class: "form-control #{current_user.get_color}" %>
+<% end %>

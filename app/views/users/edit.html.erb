@@ -1,0 +1,85 @@
+<h3 class="text-center">Account Settings</h3>
+
+<%= form_for @user do |f| %>
+  <!-- NAME -->
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <h5>Display Name</h5>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <br>
+
+  <!-- EMAIL -->
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <h5>Email</h5>
+      <%= f.text_field :email, class: 'form-control' %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <br>
+
+  <!-- BIO -->
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <h5>About You</h5>
+      <%= f.text_area :bio, class: 'form-control', rows: 5 %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <br>
+
+  <!-- COLOR -->
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <h5>Prefered Color</h5>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <%= f.radio_button(:color, "none") %>
+      <%= f.label(:color, "None") %>
+
+      <%= f.radio_button(:color, "blue") %>
+      <%= f.label(:color, "Blue") %>
+
+      <%= f.radio_button(:color, "red") %>
+      <%= f.label(:color, "Red") %>
+
+      <%= f.radio_button(:color, "green") %>
+      <%= f.label(:color, "Green") %>
+
+      <%= f.radio_button(:color, "yellow") %>
+      <%= f.label(:color, "Yellow") %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+  <br>
+
+  <!-- SUBMIT -->
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <%= f.submit "Save Changes", class: "btn-block #{current_user.get_color}"%>
+      <br><br>
+      <%= link_to "Delete Account", user_path(@user), method: 'delete', class: "btn-block text-center #{@user.get_color}", data: {confirm: "Delete your account?\n Are you sure?"} %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
+
+
+<% end %>
